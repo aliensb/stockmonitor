@@ -1,0 +1,96 @@
+{
+	"BUILD_DIR" : "/home/tom/code/home_monitor/build/home_monitor_autogen",
+	"CMAKE_BINARY_DIR" : "/home/tom/code/home_monitor/build",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/tom/code/home_monitor/build",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/tom/code/home_monitor",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/tom/code/home_monitor",
+	"DEP_FILE" : "",
+	"DEP_FILE_RULE_NAME" : "",
+	"HEADERS" : 
+	[
+		[
+			"/home/tom/code/home_monitor/homemonitorplugin.h",
+			"MU",
+			"EWIEGA46WW/moc_homemonitorplugin.cpp"
+		],
+		[
+			"/home/tom/code/home_monitor/informationwidget.h",
+			"MU",
+			"EWIEGA46WW/moc_informationwidget.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/tom/code/home_monitor/build/home_monitor_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/tom/code/home_monitor/build/home_monitor_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NO_DEBUG",
+		"QT_WIDGETS_LIB",
+		"home_monitor_EXPORTS"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/usr/include/libdtk-2.1.1/DCore",
+		"/usr/include/libdtk-2.1.1/DWidget",
+		"/usr/include/qt/QtNetwork",
+		"/usr/include/dde-dock",
+		"/usr/include/qt",
+		"/usr/include/qt/QtWidgets",
+		"/usr/include/qt/QtGui",
+		"/usr/include/qt/QtCore",
+		"/usr/lib/qt/mkspecs/linux-g++",
+		"/usr/include/c++/9.3.0",
+		"/usr/include/c++/9.3.0/x86_64-pc-linux-gnu",
+		"/usr/include/c++/9.3.0/backward",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include",
+		"/usr/local/include",
+		"/usr/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include-fixed",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.17/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/tom/code/home_monitor/build/home_monitor_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "/home/tom/code/home_monitor/build/CMakeFiles/home_monitor_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 14,
+	"SETTINGS_FILE" : "/home/tom/code/home_monitor/build/CMakeFiles/home_monitor_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/tom/code/home_monitor/build/CMakeFiles/3.17.0/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+			"MU"
+		],
+		[ "/home/tom/code/home_monitor/homemonitorplugin.cpp", "MU" ],
+		[ "/home/tom/code/home_monitor/informationwidget.cpp", "MU" ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

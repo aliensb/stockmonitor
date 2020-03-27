@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/home/tom/code/home_monitor/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -Dhome_monitor_EXPORTS -I/home/tom/code/home_monitor/build/home_monitor_autogen/include -I/usr/include/libdtk-2.1.1/DCore -I/usr/include/libdtk-2.1.1/DCore/../DWidget -I/usr/include/qt/QtNetwork -I/usr/include/dde-dock -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++  -fPIC    -DQT_PLUGIN -fPIC -o CMakeFiles/home_monitor.dir/home_monitor_autogen/mocs_compilation.cpp.o -c /home/tom/code/home_monitor/build/home_monitor_autogen/mocs_compilation.cpp",
+  "file": "/home/tom/code/home_monitor/build/home_monitor_autogen/mocs_compilation.cpp"
+},
+{
+  "directory": "/home/tom/code/home_monitor/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -Dhome_monitor_EXPORTS -I/home/tom/code/home_monitor/build/home_monitor_autogen/include -I/usr/include/libdtk-2.1.1/DCore -I/usr/include/libdtk-2.1.1/DCore/../DWidget -I/usr/include/qt/QtNetwork -I/usr/include/dde-dock -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++  -fPIC    -DQT_PLUGIN -fPIC -o CMakeFiles/home_monitor.dir/CMakeFiles/3.17.0/CompilerIdCXX/CMakeCXXCompilerId.cpp.o -c /home/tom/code/home_monitor/build/CMakeFiles/3.17.0/CompilerIdCXX/CMakeCXXCompilerId.cpp",
+  "file": "/home/tom/code/home_monitor/build/CMakeFiles/3.17.0/CompilerIdCXX/CMakeCXXCompilerId.cpp"
+},
+{
+  "directory": "/home/tom/code/home_monitor/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -Dhome_monitor_EXPORTS -I/home/tom/code/home_monitor/build/home_monitor_autogen/include -I/usr/include/libdtk-2.1.1/DCore -I/usr/include/libdtk-2.1.1/DCore/../DWidget -I/usr/include/qt/QtNetwork -I/usr/include/dde-dock -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++  -fPIC    -DQT_PLUGIN -fPIC -o CMakeFiles/home_monitor.dir/homemonitorplugin.cpp.o -c /home/tom/code/home_monitor/homemonitorplugin.cpp",
+  "file": "/home/tom/code/home_monitor/homemonitorplugin.cpp"
+},
+{
+  "directory": "/home/tom/code/home_monitor/build",
+  "command": "/usr/bin/c++  -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -Dhome_monitor_EXPORTS -I/home/tom/code/home_monitor/build/home_monitor_autogen/include -I/usr/include/libdtk-2.1.1/DCore -I/usr/include/libdtk-2.1.1/DCore/../DWidget -I/usr/include/qt/QtNetwork -I/usr/include/dde-dock -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -isystem /usr/lib/qt/mkspecs/linux-g++  -fPIC    -DQT_PLUGIN -fPIC -o CMakeFiles/home_monitor.dir/informationwidget.cpp.o -c /home/tom/code/home_monitor/informationwidget.cpp",
+  "file": "/home/tom/code/home_monitor/informationwidget.cpp"
+}
+]
