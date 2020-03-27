@@ -1,8 +1,0 @@
-/home/tom/code/home_monitor/build/CMakeFiles/install/strip.dir
-/home/tom/code/home_monitor/build/CMakeFiles/install/local.dir
-/home/tom/code/home_monitor/build/CMakeFiles/edit_cache.dir
-/home/tom/code/home_monitor/build/CMakeFiles/home_monitor.dir
-/home/tom/code/home_monitor/build/CMakeFiles/rebuild_cache.dir
-/home/tom/code/home_monitor/build/CMakeFiles/install.dir
-/home/tom/code/home_monitor/build/CMakeFiles/list_install_components.dir
-/home/tom/code/home_monitor/build/CMakeFiles/home_monitor_autogen.dir
