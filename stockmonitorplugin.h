@@ -4,9 +4,16 @@
 #include <dde-dock/pluginsiteminterface.h>
 #include <QFile>
 #include <QObject>
+#include <QLabel>
+#include <QTimer>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QNetworkAccessManager>
+#include <QMessageBox>
 #include "informationwidget.h"
-class InformationWidget;
-class HomeMonitorPlugin : public QObject, PluginsItemInterface
+#include "stockinfo.h"
+
+class StockMonitorPlugin : public QObject, PluginsItemInterface
 {
     Q_OBJECT
     // 声明实现了的接口
@@ -15,7 +22,7 @@ class HomeMonitorPlugin : public QObject, PluginsItemInterface
     Q_PLUGIN_METADATA(IID "com.deepin.dock.PluginsItemInterface" FILE "home_monitor.json")
 
 public:
-    explicit HomeMonitorPlugin(QObject *parent = nullptr);
+    explicit StockMonitorPlugin(QObject *parent = nullptr);
 
     // 返回插件的名称，必须是唯一值，不可以和其它插件冲突
     const QString pluginName() const override;
@@ -30,15 +37,32 @@ public:
     bool pluginIsDisable() override;
     void pluginStateSwitched() override;
     const QString pluginDisplayName() const override;
-    QWidget *itemTipsWidget(const QString &itemKey) override;
     const QString itemContextMenu(const QString &itemKey) override;
     void invokedMenuItem(const QString &itemKey, const QString &menuId, const bool checked) override;
     const QString itemCommand(const QString &itemKey) override;
-    QString currentCode;
+
+   
 private:
-    InformationWidget *m_pluginWidget;
-    QLabel *m_tipsWidget; //支持 hover tip
+    void getStockInfo(QString url,const char *charset);
+    //void parseData(QString data);
+    stockInfo *currentStockInfo;
+    void refresh();
+    InformationWidget *infoWidget;
+    QLabel * tipsLabel;
+    //股票代码集合
     QStringList *list;
+     //显示容器
+    QWidget *itemTipsWidget(const QString &itemKey) override;
+    // //当前显示的股票代码
+    // QString currentCode;
+
+    //定时器
+    QTimer *m_refreshTimer;
+    // 分区数据的来源
+    //QStorageInfo *m_storageInfo;
+    QNetworkAccessManager *manager;
+    QNetworkRequest *request;
+
 
     
 };

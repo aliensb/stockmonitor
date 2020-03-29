@@ -7,7 +7,7 @@
 cmake_minimum_required(VERSION 3.9)
 
 # 使用 set 命令设置一个变量
-set(PLUGIN_NAME "home_monitor")
+set(PLUGIN_NAME "stock_monitor")
 # set(CMAKE_CXX_COMPILER "/usr/bin/g++")
 
 # 设置项目名称

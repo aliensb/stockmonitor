@@ -16,6 +16,8 @@
         "istream": "cpp",
         "functional": "cpp",
         "tuple": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "qtcore": "cpp",
+        "qnetworkreply": "cpp"
     }
 }
