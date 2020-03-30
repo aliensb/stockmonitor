@@ -19,7 +19,7 @@ class StockMonitorPlugin : public QObject, PluginsItemInterface
     // 声明实现了的接口
     Q_INTERFACES(PluginsItemInterface)
     // 插件元数据
-    Q_PLUGIN_METADATA(IID "com.deepin.dock.PluginsItemInterface" FILE "home_monitor.json")
+    Q_PLUGIN_METADATA(IID "com.deepin.dock.PluginsItemInterface" FILE "stock_monitor.json")
 
 public:
     explicit StockMonitorPlugin(QObject *parent = nullptr);
@@ -62,6 +62,7 @@ private:
     //QStorageInfo *m_storageInfo;
     QNetworkAccessManager *manager;
     QNetworkRequest *request;
+    bool isShow;
 
 
     

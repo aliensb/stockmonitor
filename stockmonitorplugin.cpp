@@ -83,10 +83,13 @@ void StockMonitorPlugin::pluginStateSwitched()
     m_proxyInter->saveValue(this, "disabled", disabledNew);
 
     // 根据新的禁用状态值处理主控件的加载和卸载
+    //qDebug()<<disabledNew;
     if (disabledNew) {
         m_proxyInter->itemRemoved(this, pluginName());
+        disconnect(m_refreshTimer, 0, this, 0);
     } else {
         m_proxyInter->itemAdded(this, pluginName());
+        connect(m_refreshTimer, &QTimer::timeout, this, &StockMonitorPlugin::refresh);
     }
 }
 
@@ -139,6 +142,21 @@ void StockMonitorPlugin::invokedMenuItem(const QString &itemKey, const QString &
     // 根据上面接口设置的 id 执行不同的操作
     if (menuId == "setting") {
         qDebug()<<"setting";
+         QMessageBox messageBox(QMessageBox::NoIcon,
+                           "退出", "你确定要退出吗?",
+                           QMessageBox::Yes | QMessageBox::No, NULL); ;
+        int result=messageBox.exec();
+        switch (result)
+        {
+        case QMessageBox::Yes:
+            qDebug()<<"Yes";
+            break;
+        case QMessageBox::No:
+            qDebug()<<"NO";
+            break;
+        default:
+            break;
+        }
     } 
 }
 
@@ -194,12 +212,12 @@ void StockMonitorPlugin::getStockInfo(QString url,const char *charset){
     //  currentStockInfo->percent=0;
     //     QMessageBox::about(nullptr,"Error",exception);
     // }
-    qDebug()<<QString("%1%2%3%4%5")
-    .arg(currentStockInfo->name)
-    .arg(currentStockInfo->open)
-    .arg(currentStockInfo->now)
-    .arg(currentStockInfo->old)
-    .arg(currentStockInfo->percent);
+    // qDebug()<<QString("%1%2%3%4%5")
+    // .arg(currentStockInfo->name)
+    // .arg(currentStockInfo->open)
+    // .arg(currentStockInfo->now)
+    // .arg(currentStockInfo->old)
+    // .arg(currentStockInfo->percent);
     return ;
 }
 
@@ -231,4 +249,13 @@ void StockMonitorPlugin::refresh(){
     auto text=QString("%1: %2 %3 %4%").arg(currentStockInfo->name).arg(currentStockInfo->now).arg(flag).arg(percent);
     
     infoWidget->setTextAndStyle(text,style);
+    // if(currentStockInfo->percent>0.05||currentStockInfo->percent<-0.05){
+    //     //qDebug()<<"准备警告";
+    //    if(!isShow){
+    //         QMessageBox::information(NULL, "股价警告", text, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    //         isShow=true;
+    //    }
+    // }else{
+    //     isShow=false;
+    // }
 }
