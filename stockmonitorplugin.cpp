@@ -103,11 +103,12 @@ QWidget *StockMonitorPlugin::itemTipsWidget(const QString &itemKey)
     Q_UNUSED(itemKey);
 
     // 设置/刷新 tips 中的信息
-    auto res= QString("%1：%2\n开盘价：%3\n昨日收盘：%4\n").arg(currentStockInfo->name)
+    auto res= QString("%1：%2\n开盘价：%3\n昨日收盘：%4\n今日最高: %5\n今日最低: %6\n").arg(currentStockInfo->name)
     .arg(currentStockInfo->code)
     .arg(currentStockInfo->open)
-    .arg(currentStockInfo->old);
-
+    .arg(currentStockInfo->old)
+    .arg(currentStockInfo->todayHigh)
+    .arg(currentStockInfo->todayLow);
     tipsLabel->setText(res);
     return tipsLabel;
 }
@@ -202,6 +203,8 @@ void StockMonitorPlugin::getStockInfo(QString url,const char *charset){
      currentStockInfo->now=list.at(3).toDouble();
      currentStockInfo->old=list.at(2).toDouble();
      currentStockInfo->percent=(currentStockInfo->now-currentStockInfo->old)/currentStockInfo->old;
+     currentStockInfo->todayHigh=list.at(4).toDouble();
+     currentStockInfo->todayLow=list.at(5).toDouble();
      
 
     // }catch(QString exception){

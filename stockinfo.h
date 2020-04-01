@@ -6,4 +6,7 @@ struct stockInfo{
     double now;
     double old;
     double percent;
+    double todayHigh;
+    double todayLow;
+
 };
