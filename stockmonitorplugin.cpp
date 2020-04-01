@@ -8,7 +8,7 @@ StockMonitorPlugin::StockMonitorPlugin(QObject *parent)
     manager = new QNetworkAccessManager;
     request=new QNetworkRequest;
     currentStockInfo= new stockInfo;
-    
+    stocks=new std::map<QString,stockInfo*>;
 }
 
 const QString StockMonitorPlugin::pluginName() const
@@ -21,6 +21,7 @@ void StockMonitorPlugin::init(PluginProxyInterface *proxyInter)
     m_proxyInter = proxyInter;
     //添加到任务栏的容器
     infoWidget = new InformationWidget;
+    
    
    //鼠标指上面显示打对话框
     tipsLabel = new QLabel; // new
@@ -37,7 +38,12 @@ void StockMonitorPlugin::init(PluginProxyInterface *proxyInter)
         QByteArray line = file.readLine();
         QString str(line);
         list->push_back(str.trimmed());
+        stockInfo *st=new stockInfo();
+        st->code=str.trimmed();
+        stocks->insert(std::pair<QString,stockInfo*>(str.trimmed(), st));
     }
+    codes=list->join(",");
+
     currentStockInfo->code=list->at(0);
     // m_pluginWidget->regist(this);
     
@@ -103,13 +109,27 @@ QWidget *StockMonitorPlugin::itemTipsWidget(const QString &itemKey)
     Q_UNUSED(itemKey);
 
     // 设置/刷新 tips 中的信息
-    auto res= QString("%1：%2\n开盘价：%3\n昨日收盘：%4\n今日最高: %5\n今日最低: %6\n").arg(currentStockInfo->name)
-    .arg(currentStockInfo->code)
-    .arg(currentStockInfo->open)
-    .arg(currentStockInfo->old)
-    .arg(currentStockInfo->todayHigh)
-    .arg(currentStockInfo->todayLow);
+    // auto res= QString("%1：%2\n开盘价：%3\n昨日收盘：%4\n今日最高: %5\n今日最低: %6\n").arg(currentStockInfo->name)
+    // .arg(currentStockInfo->code)
+    // .arg(currentStockInfo->open)
+    // .arg(currentStockInfo->old)
+    // .arg(currentStockInfo->todayHigh)
+    // .arg(currentStockInfo->todayLow);
+    // tipsLabel->setText(res);
+    //getMutiStockInfo();
+    auto st=stocks->at(currentStockInfo->code);
+    QString res=
+        QString("%1\t%2\n开盘价\t%3\n昨日收盘\t%4\n今日最高\t%5\n今日最低\t%6\n")
+        .arg(st->name)
+        .arg(st->code)
+        .arg(st->open)
+        .arg(st->old)
+        .arg(st->todayHigh)
+        .arg(st->todayLow);
     tipsLabel->setText(res);
+  
+        
+
     return tipsLabel;
 }
 
@@ -173,6 +193,7 @@ const QString StockMonitorPlugin::itemCommand(const QString &itemKey){
         currentStockInfo->code=list->at(index);
         qDebug()<<QString("cureent currentCode  is %1").arg(currentStockInfo->code);
         refresh();
+//        getMutiStockInfo();
         return QString();
 }
 
@@ -205,37 +226,67 @@ void StockMonitorPlugin::getStockInfo(QString url,const char *charset){
      currentStockInfo->percent=(currentStockInfo->now-currentStockInfo->old)/currentStockInfo->old;
      currentStockInfo->todayHigh=list.at(4).toDouble();
      currentStockInfo->todayLow=list.at(5).toDouble();
-     
-
-    // }catch(QString exception){
-    //  currentStockInfo->name="网络错误，请稍后再试";
-    //  currentStockInfo->open=0;
-    //  currentStockInfo->now=0;
-    //  currentStockInfo->old=0;
-    //  currentStockInfo->percent=0;
-    //     QMessageBox::about(nullptr,"Error",exception);
-    // }
-    // qDebug()<<QString("%1%2%3%4%5")
-    // .arg(currentStockInfo->name)
-    // .arg(currentStockInfo->open)
-    // .arg(currentStockInfo->now)
-    // .arg(currentStockInfo->old)
-    // .arg(currentStockInfo->percent);
     return ;
 }
 
+
+void StockMonitorPlugin::getMutiStockInfo(){
+    //qDebug()<<QString("请求路径为 %1").arg(url);
+   // QNetworkAccessManager *manager = new QNetworkAccessManager();
+   // QNetworkRequest request;
+    QString url="http://hq.sinajs.cn/list="+codes;
+   ;
+    request->setUrl(QUrl(url));
+    // try{
+
+    QNetworkReply *pReply = manager->get(*request);
+        // 开启一个局部的事件循环，等待页面响应结束
+    QEventLoop eventLoop;
+    QObject::connect(manager, &QNetworkAccessManager::finished, &eventLoop, &QEventLoop::quit);
+    eventLoop.exec();
+        // 获取网页Body中的内容
+    QByteArray bytes = pReply->readAll();
+    QTextCodec *tc = QTextCodec::codecForName("GB18030");
+
+    QString str = tc->toUnicode(bytes);
+
+    if(!str.isEmpty()){
+        QStringList list=str.split(";");
+        for (int i=0;i<list.size()-1;i++){
+            QString stockStr=list.at(i);
+            QString name=stockStr.split("=").at(0).split("_").at(2);
+
+            QStringList sto=stockStr.split(",");
+            stockInfo *st=stocks->at(name);
+
+            st->name=sto.at(0).split("\"").at(1);
+            st->open=sto.at(1).toDouble();
+            st->now=sto.at(3).toDouble();
+            st->old=sto.at(2).toDouble();
+            st->percent=(st->now-st->old)/st->old;
+            st->todayHigh=sto.at(4).toDouble();
+            st->todayLow=sto.at(5).toDouble();
+           
+        }
+    }
+   
+    return ;
+}
 
 
 
 void StockMonitorPlugin::refresh(){
      // 更新内容`
     //qDebug()<<QString("请求开始时间 %1").arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm::ss.zzz"));
-    getStockInfo("http://hq.sinajs.cn/list="+currentStockInfo->code,"GB18030");
+   // getStockInfo("http://hq.sinajs.cn/list="+currentStockInfo->code,"GB18030");
     //qDebug()<<QString("请求结束时间 %1").arg(QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm::ss.zzz"));
     // parseData(res);
+
+    getMutiStockInfo();
+    auto st=stocks->at(currentStockInfo->code);
     QString flag="";
     QString style="";
-    if(currentStockInfo->percent>=0){
+    if(st->percent>=0){
         style="QLabel {"
                                "color: red;"
                                "padding: auto 10px;"
@@ -248,8 +299,8 @@ void StockMonitorPlugin::refresh(){
                                "}";
          flag="↓";
     }
-    auto percent=QString::number(currentStockInfo->percent*100, 'f', 2);
-    auto text=QString("%1: %2 %3 %4%").arg(currentStockInfo->name).arg(currentStockInfo->now).arg(flag).arg(percent);
+    auto percent=QString::number(st->percent*100, 'f', 2);
+    auto text=QString("%1: %2 %3 %4%").arg(st->name).arg(st->now).arg(flag).arg(percent);
     
     infoWidget->setTextAndStyle(text,style);
     // if(currentStockInfo->percent>0.05||currentStockInfo->percent<-0.05){

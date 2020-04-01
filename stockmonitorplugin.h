@@ -12,6 +12,7 @@
 #include <QMessageBox>
 #include "informationwidget.h"
 #include "stockinfo.h"
+#include <map>
 
 class StockMonitorPlugin : public QObject, PluginsItemInterface
 {
@@ -44,6 +45,7 @@ public:
    
 private:
     void getStockInfo(QString url,const char *charset);
+    void getMutiStockInfo();
     //void parseData(QString data);
     stockInfo *currentStockInfo;
     void refresh();
@@ -51,6 +53,9 @@ private:
     QLabel * tipsLabel;
     //股票代码集合
     QStringList *list;
+    //股票代码集合,形式如下sz399001,sh000001
+    QString codes;
+    std::map<QString,stockInfo*> *stocks;
      //显示容器
     QWidget *itemTipsWidget(const QString &itemKey) override;
     // //当前显示的股票代码
