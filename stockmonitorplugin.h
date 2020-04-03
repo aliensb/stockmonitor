@@ -49,6 +49,7 @@ private:
     //void parseData(QString data);
     stockInfo *currentStockInfo;
     void refresh();
+    void rolling();
     InformationWidget *infoWidget;
     QLabel * tipsLabel;
     //股票代码集合
@@ -63,6 +64,9 @@ private:
 
     //定时器
     QTimer *m_refreshTimer;
+
+      //定时器
+    QTimer *rollingTimmer;
     // 分区数据的来源
     //QStorageInfo *m_storageInfo;
     QNetworkAccessManager *manager;

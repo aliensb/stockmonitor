@@ -3,6 +3,7 @@
 StockMonitorPlugin::StockMonitorPlugin(QObject *parent)
     : QObject(parent)
     , m_refreshTimer(new QTimer(this))
+    , rollingTimmer(new QTimer(this))
 {
     list=new QStringList();
     manager = new QNetworkAccessManager;
@@ -50,6 +51,7 @@ void StockMonitorPlugin::init(PluginProxyInterface *proxyInter)
     refresh();
     connect(m_refreshTimer, &QTimer::timeout, this, &StockMonitorPlugin::refresh);
     m_refreshTimer->start(500);
+   
     m_proxyInter->itemAdded(this, pluginName());
 
     // 如果插件没有被禁用则在初始化插件时才添加主控件到面板上
@@ -119,7 +121,7 @@ QWidget *StockMonitorPlugin::itemTipsWidget(const QString &itemKey)
     //getMutiStockInfo();
     auto st=stocks->at(currentStockInfo->code);
     QString res=
-        QString("%1\t%2\n开盘价\t%3\n昨日收盘\t%4\n今日最高\t%5\n今日最低\t%6\n")
+        QString("%1\t%2\n开盘价格\t%3\n昨日收盘\t%4\n今日最高\t%5\n今日最低\t%6\n")
         .arg(st->name)
         .arg(st->code)
         .arg(st->open)
@@ -141,8 +143,8 @@ const QString StockMonitorPlugin::itemContextMenu(const QString &itemKey)
     items.reserve(1);
 
     QMap<QString, QVariant> refresh;
-    refresh["itemId"] = "setting";
-    refresh["itemText"] = "setting";
+    refresh["itemId"] = "roll";
+    refresh["itemText"] = "滚动";
     refresh["isActive"] = true;
     items.push_back(refresh);
 
@@ -161,19 +163,22 @@ void StockMonitorPlugin::invokedMenuItem(const QString &itemKey, const QString &
     Q_UNUSED(itemKey);
 
     // 根据上面接口设置的 id 执行不同的操作
-    if (menuId == "setting") {
-        qDebug()<<"setting";
+    if (menuId == "roll") {
+        qDebug()<<"roll";
          QMessageBox messageBox(QMessageBox::NoIcon,
-                           "退出", "你确定要退出吗?",
+                           "开启滚动", "你确定要开启滚动吗?",
                            QMessageBox::Yes | QMessageBox::No, NULL); ;
         int result=messageBox.exec();
         switch (result)
         {
         case QMessageBox::Yes:
             qDebug()<<"Yes";
+            connect(rollingTimmer,&QTimer::timeout,this,&StockMonitorPlugin::rolling);
+            rollingTimmer->start(2000);
             break;
         case QMessageBox::No:
             qDebug()<<"NO";
+            disconnect(rollingTimmer, 0, this, 0);
             break;
         default:
             break;
@@ -301,15 +306,40 @@ void StockMonitorPlugin::refresh(){
     }
     auto percent=QString::number(st->percent*100, 'f', 2);
     auto text=QString("%1: %2 %3 %4%").arg(st->name).arg(st->now).arg(flag).arg(percent);
-    
     infoWidget->setTextAndStyle(text,style);
-    // if(currentStockInfo->percent>0.05||currentStockInfo->percent<-0.05){
-    //     //qDebug()<<"准备警告";
-    //    if(!isShow){
-    //         QMessageBox::information(NULL, "股价警告", text, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-    //         isShow=true;
-    //    }
-    // }else{
-    //     isShow=false;
-    // }
+
+
+}
+
+void StockMonitorPlugin::rolling(){
+
+    int index=list->indexOf(currentStockInfo->code);
+    if(index+1==list->size()){
+        index=0;
+    }else{
+        index++;
+    }
+    qDebug()<<QString("next index  is %1").arg(index);
+
+    currentStockInfo->code=list->at(index);
+
+    auto st=stocks->at(currentStockInfo->code);
+    QString flag="";
+    QString style="";
+    if(st->percent>=0){
+        style="QLabel {"
+                               "color: red;"
+                               "padding: auto 10px;"
+                               "}";
+        flag="↑";
+    }else{
+        style="QLabel {"
+                               "color: green;"
+                               "padding: auto 10px;"
+                               "}";
+         flag="↓";
+    }
+    auto percent=QString::number(st->percent*100, 'f', 2);
+    auto text=QString("%1: %2 %3 %4%").arg(st->name).arg(st->now).arg(flag).arg(percent);
+    infoWidget->setTextAndStyle(text,style);
 }
