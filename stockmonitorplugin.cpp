@@ -29,7 +29,7 @@ void StockMonitorPlugin::init(PluginProxyInterface *proxyInter)
     tipsLabel->setStyleSheet("color:white; padding:0px 3px;");
 
     //从文件中读取codes;
-    QFile file("/home/tom/stockCodes");
+    QFile file(QStandardPaths::writableLocation(QStandardPaths::HomeLocation) +"/stockCodes");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug()<<"Can't open the file!"<<endl;
