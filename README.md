@@ -1,4 +1,4 @@
-# dde-sys-stock-monitor
+# dde-stock-monitor
 ## deepin dock股票监控插件，手动添加股票代码，监控股票状态，支持自动切换股票，和手动切换
 ### 参考了https://github.com/linuxdeepin/dde-dock/blob/master/plugins/plugin-guide/plugins-developer-guide.md
 
